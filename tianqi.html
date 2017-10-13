@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        div {
+            width: 300px;
+            margin: 100px auto;
+        }
+
+        input {
+            height: 30px;
+            float: left;
+            width: 200px;
+        }
+
+        button {
+            height: 34px;
+            float: left;
+            width: 50px;
+            background: red;
+            border: 1px solid red;
+            color: wheat;
+        }
+
+        .left {
+            clear: both;
+        }
+
+        .yanse {
+
+            margin-top: -80px;
+            margin-left: 360px;
+            width: 600px;
+            background-image: url("u=950785990,3237757169&fm=27&gp=0.jpg");
+
+        }
+
+        h3 {
+            position: absolute;
+            top: 40px;
+            left: 580px;
+            background: #005FC3;
+            width: 150px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            color: white;
+        }
+        li{
+
+            width: 600px;
+            height: 30px;
+            font-size: 20px;
+            /*margin-top: -80px;*/
+            color: white;
+            text-align: center;
+
+
+        }
+        li:hover{
+            background: red;
+            color: #0000cc;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+<h3>全国天气预报</h3>
+
+<div>
+
+    <input type="text"/>
+    <button>查询</button>
+    <div class="left"></div>
+
+</div>
+
+<ul class="yanse">
+
+</ul>
+
+
+</body>
+<script src="https://cdn.bootcss.com/jquery/1.12.3/jquery.js"></script>
+
+<script>
+    $('button').on('click', function () {
+        var text = $('input').val();
+
+        $.ajax({
+            url: 'http://v.juhe.cn/weather/index?',
+            data: {
+                cityname: text,
+                key: '920f35b906742f88ab3dbe2ad195e4a1'
+            },
+            type: 'get',
+            dataType: 'jsonp',
+            jsonp: 'callback',
+
+
+            success: function (data) {
+                if(data.resultcode==='200'){
+                    var str = '';
+                    str+='<li>所在城市：'+data.result.today.city+'</li>';
+                    str += '<li>更新时间:'+data.result.today.date_y+'   '+data.result.sk.time+'</li>';
+                    str += '<li>今日温度:'+data.result.today.temperature+'</li>';
+                    str += '<li>今日天气:'+data.result.today.weather+'</li>';
+                    str += '<li>当前温度:'+data.result.sk.temp+'</li>';
+                    str += '<li>当前风向:'+data.result.sk.wind_direction+'</li>';
+                    str += '<li>当前风力:'+data.result.sk.wind_strength+'</li>';
+                    str += '<li>当前湿度:'+data.result.sk.humidity+'</li>';
+
+
+
+                    $('ul').html(str)
+                }else{
+                    $('ul').html('<li>您查询的城市不存在</li>')
+                }
+
+
+
+
+            },
+            error: function () {
+
+alert('没有该城市')
+            }
+
+
+        })
+
+
+    })
+</script>
+</html>
