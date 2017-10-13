@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .box {
+            margin: 100px auto;
+            width: 406px;
+
+        }
+
+        input {
+            width: 300px;
+            height: 30px;
+
+        }
+
+        ul {
+            list-style: none;
+            width: 302px;
+            border: 1px solid #c7c7c7;
+        }
+
+        button {
+            width: 80px;
+            height: 30px;
+        }
+
+        li {
+            width: 302px;
+            height: 30px;
+            cursor: pointer;
+
+        }
+
+        li:hover {
+            background: #c7c7c7;
+        }
+
+    </style>
+</head>
+<body>
+<div class="box">
+    <input type="text"/>
+    <button>点我</button>
+    <ul>
+
+    </ul>
+
+</div>
+
+</body>
+<script src="https://cdn.bootcss.com/jquery/1.12.3/jquery.js"></script>
+<script>
+    $('input').on('keyup', function () {
+        var text = $(this).val();
+        $.ajax({
+            url: 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?',
+            type: 'get',
+            data: {
+                wd: text
+            },
+            dataType: 'jsonp',
+            jsonp: 'cb',
+
+            success: function (data) {
+                var str = '';
+                for (var i = 0; i < data.s.length; i++) {
+                    str += '<li>' + data.s[i] + '</li>'
+                }
+                $('ul').html(str)
+            },
+            error: function () {
+                alert('请求失败')
+            }
+
+        })
+    })
+</script>
+</html>
